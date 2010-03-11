@@ -56,7 +56,7 @@ class A1_ORM extends A1 {
 	}
 
         protected function dba_validate_user_password($user, $password) {
-                $password_in_db = $user->{this->_config['columns']['password']};
+                $password_in_db = $user->{$this->_config['columns']['password']};
                 $salt = $this->find_salt($password_in_db);
                 
                 if($this->hash_password($password, $salt) === $password_in_db)
