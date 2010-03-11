@@ -31,7 +31,8 @@ class A1_ORM extends A1 {
 
 	protected function dba_load_user_by_username($username) {
 		$user = ORM::factory($this->_config['user_model'])
-			->where($this->_config['columns']['username'],'=',$username);
+			->where($this->_config['columns']['username'],'=',$username)
+			->find();
 		if($user->loaded()) {
 			return $user;
 		} else {
