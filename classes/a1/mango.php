@@ -1,21 +1,6 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class A1_Mango extends A1 {
-        /**
-         * Return a static instance of A1_Sprig.
-         *
-         * @return  object
-         */
-        public static function instance($_name = 'a1')
-        {
-                static $_instances;
-
-                if ( ! isset($_instances[$_name]))
-                {
-                        $_instances[$_name] = new A1_Mango($_name);
-                }
-
-                return $_instances[$_name];
-        }
 
 	protected function dba_load_user_by_token($user_id, $token) {
 		$user = Mango::factory($this->_config['user_model'], array(

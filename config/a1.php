@@ -1,6 +1,13 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
 return array(
+
+	/**
+	 * Set the ORM driver.
+	 * ORM, Sprig and Mango are available.
+	 * The default - Kohana ORM.
+	 */
+	'driver' => 'ORM',
 
 	/**
 	 * Type of hash to use for passwords. Any algorithm supported by the hash function

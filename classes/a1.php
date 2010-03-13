@@ -1,9 +1,10 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 /**
  * User AUTHENTICATION library. Handles user login and logout, as well as secure
  * password hashing.
  *
- * Based on Kohana's AUTH library and Fred Wu's AuthLite library:
+ * Based on Wouter A1 AUTH library and mlb fork of it:
  *
  * @package    Auth
  * @author     Kohana Team
@@ -19,6 +20,7 @@
  * @since    0.3.0
  */
 abstract class A1 {
+
 	protected $_name;
 	protected $_config;
 	public $_sess;
@@ -41,6 +43,26 @@ abstract class A1 {
 		$this->_config['session_key'] = 'a1_' . $this->_name;
 	}
 
+	/**
+	* Return a static instance of A1 Driver.
+	*
+	* @return  object
+	*/
+	public static function instance($_name = 'a1')
+	{
+		static $_instances;
+	
+		$config = Kohana::config($_name);
+		$class_name = 'A1_'.$config['driver'];
+		
+		if ( ! isset($_instances[$_name]))
+		{
+				$_instances[$_name] = new $class_name($_name);
+		}
+
+		return $_instances[$_name];
+	}
+	
 	/**
 	 * Returns TRUE is a user is currently logged in
 	 *

@@ -1,22 +1,6 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class A1_ORM extends A1 {
-        /**
-         * Return a static instance of A1_ORM.
-         *
-         * @return  object
-         */
-        public static function instance($_name = 'a1')
-        {
-                static $_instances;
-
-                if ( ! isset($_instances[$_name]))
-                {
-                        $_instances[$_name] = new A1_ORM($_name);
-                }
-
-                return $_instances[$_name];
-        }
-
 
 	protected function dba_load_user_by_token($user_id, $token) {
 		$user = ORM::factory($this->_config['user_model'])
@@ -56,15 +40,15 @@ class A1_ORM extends A1 {
 		$user->save();
 	}
 
-        protected function dba_validate_user_password($user, $password) {
-                $password_in_db = $user->{$this->_config['columns']['password']};
-                $salt = $this->find_salt($password_in_db);
-                
-                if($this->hash_password($password, $salt) === $password_in_db)
-                {       
-                        return true;
-                }
+	protected function dba_validate_user_password($user, $password) {
+		$password_in_db = $user->{$this->_config['columns']['password']};
+		$salt = $this->find_salt($password_in_db);
+		
+		if($this->hash_password($password, $salt) === $password_in_db)
+		{       
+				return true;
+		}
 
-                return false;
-        }
+		return false;
+	}
 } // End A1_ORM

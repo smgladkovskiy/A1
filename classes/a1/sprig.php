@@ -1,22 +1,6 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class A1_Sprig extends A1 {
-        /**
-         * Return a static instance of A1_Sprig.
-         *
-         * @return  object
-         */
-        public static function instance($_name = 'a1')
-        {
-                static $_instances;
-
-                if ( ! isset($_instances[$_name]))
-                {
-                        $_instances[$_name] = new A1_Sprig($_name);
-                }
-
-                return $_instances[$_name];
-        }
-
 
 	protected function dba_load_user_by_token($user_id, $token) {
 		$user = Sprig::factory($this->_config['user_model'], array(
