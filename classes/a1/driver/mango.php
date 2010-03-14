@@ -1,49 +1,106 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * A1 Mango Driver
+ *
+ * @author avis <SMGladkovskiy@gmail.com>
+ * @package A1 drivers
+ */
 class A1_Driver_Mango extends A1 implements A1_Driver_Interface {
 
-	public function dba_load_user_by_token($user_id, $token) {
+	/**
+	 * Loading user by token and id
+	 *
+	 * @param integer $user_id
+	 * @param string $token
+	 * @return object / NULL
+	 */
+	public function dba_load_user_by_token($user_id, $token)
+	{
 		$user = Mango::factory($this->_config['user_model'], array(
 			'_id'   => $user_id,
 			'token' => $token
 		))->load();
 
-		//TODO: do the right thing here
-		return null;
+		// @TODO: do the right thing here
+		return NULL;
 	}
 
-	public function dba_load_user_by_username($username) {
+	/**
+	 * Loading user by name
+	 *
+	 * @param string $username
+	 * @return object / NULL
+	 */
+	public function dba_load_user_by_username($username)
+	{
 		$user = Mango::factory($this->_config['user_model'],array(
 				$this->_config['columns']['username'] => $username,
 				'account_id'                          => Request::$account->_id
 		))->load();
 
-		//TODO: do the right thing here
-		return null;
+		// @TODO: do the right thing here
+		return NULL;
 	}
 
-        public function dba_set_user_token($user, $token) {
-		//TOOD: copied from sprig, fix
+	/**
+	 * Setting user token
+	 *
+	 * @param object $user
+	 * @param string $token
+	 */
+	public function dba_set_user_token($user, $token)
+	{
+		// @TODO: copied from sprig, fix
 		//$user->{$this->_config['columns']['token']} = $token;
-        }
+	}
 
-        public function dba_set_user_last_login($user, $time) {
-		//TOOD: copied from sprig, fix
+	/**
+	 * Setting last user login
+	 *
+	 * @param object $user
+	 * @param integer $time
+	 */
+	public function dba_set_user_last_login($user, $time)
+	{
+		// @TODO: copied from sprig, fix
 		//$user->{$this->_config['columns']['last_login']} = $time;
-        }
+	}
 
-        public function dba_increment_user_logins($user) {
-		//TOOD: copied from sprig, fix
+	/**
+	 * Incrementing user logins
+	 *
+	 * @param object $user
+	 * @return void
+	 */
+	public function dba_increment_user_logins($user)
+	{
+		// @TODO: copied from sprig, fix
 		//$user->{$this->_config['columns']['logins']}++;
-        }
+	}
 
-        public function dba_save_user($user) {
-                $user->update();
-        }
+	/**
+	 * Saving user
+	 *
+	 * @param object $user
+	 * @return void
+	 */
+	public function dba_save_user($user)
+	{
+		$user->update();
+	}
 
-        public function dba_validate_user_password($user, $password) {
-		//TOOD: copied from sprig, fix
+	/**
+	 * Validating user password
+	 *
+	 * @param object $user
+	 * @param string $password
+	 * @return boolean
+	 */
+	public function dba_validate_user_password($user, $password)
+	{
+		// @TODO: copied from sprig, fix
 		//return ($user->{$this->_config['columns']['password']} == $password);
-		return false;
-        }
-} // End A1_Mango
+		return FALSE;
+	}
+} // End A1_Driver_Mango

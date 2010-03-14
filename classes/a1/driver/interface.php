@@ -1,8 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * A1 Driver Interface
+ *
+ * @package A1 drivers
+ */
 interface A1_Driver_Interface {
 
-	/* methods for classes that extend A1 as database abstractors */
+	/* methods for classes that extend A1 as database drivers */
 	public function dba_load_user_by_token($user_id, $token);
 	public function dba_load_user_by_username($username);
 	public function dba_set_user_token($user, $token);
