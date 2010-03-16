@@ -15,7 +15,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param string $token
 	 * @return object / NULL
 	 */
-	public function dba_load_user_by_token($user_id, $token)
+	public function load_user_by_token($user_id, $token)
 	{
 		$user = Sprig::factory($this->_config['user_model'], array(
 					$this->_config['columns']['token'] => $token,
@@ -38,7 +38,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param string $username
 	 * @return object / NULL
 	 */
-	public function dba_load_user_by_username($username)
+	public function load_user_by_username($username)
 	{
 		$user = Sprig::factory($this->_config['user_model'], array(
 					$this->_config['columns']['username'] => $username));
@@ -60,7 +60,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param object $user
 	 * @param string $token
 	 */
-	public function dba_set_user_token($user, $token)
+	public function set_user_token($user, $token)
 	{
 		$user->{$this->_config['columns']['token']} = $token;
 	}
@@ -71,7 +71,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param object $user
 	 * @param integer $time
 	 */
-	public function dba_set_user_last_login($user, $time)
+	public function set_user_last_login($user, $time)
 	{
 		$user->{$this->_config['columns']['last_login']} = $time;
 	}
@@ -82,7 +82,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param object $user
 	 * @return void
 	 */
-	public function dba_increment_user_logins($user)
+	public function increment_user_logins($user)
 	{
 		$user->{$this->_config['columns']['logins']}++;
 	}
@@ -93,7 +93,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param object $user
 	 * @return void
 	 */
-	public function dba_save_user($user)
+	public function save_user($user)
 	{
 		$user->update();
 	}
@@ -105,7 +105,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param string $password
 	 * @return boolean
 	 */
-	public function dba_validate_user_password($user, $password)
+	public function validate_user_password($user, $password)
 	{
 		return ($user->{$this->_config['columns']['password']} == $password);
 	}

@@ -98,7 +98,7 @@ abstract class A1_Core {
 
 				if (count($token) === 2 AND is_string($token[0]) AND is_numeric($token[1]))
 				{
-					$user = $this->dba_load_user_by_token($token[1], $token[0]);
+					$user = $this->load_user_by_token($token[1], $token[0]);
 
 					// Found user, complete login and return
 					if($user) {
@@ -120,7 +120,7 @@ abstract class A1_Core {
 			// Create token
 			$token = text::random('alnum', 32);
 			
-			$this->dba_set_user_token($user, $token);
+			$this->set_user_token($user, $token);
 			
 			//cookie::set('a1_'.$this->_name.'_autologin', $token . '.' . $user->primary_key_value, $this->_config['lifetime']);
 			cookie::set('a1_'.$this->_name.'_autologin', $token . '.' . $user->id, $this->_config['lifetime']);
@@ -128,15 +128,15 @@ abstract class A1_Core {
 
 		if(isset($this->_config['columns']['last_login']))
 		{
-			$this->dba_set_user_last_login($user, time());
+			$this->set_user_last_login($user, time());
 		}
 		
 		if(isset($this->_config['columns']['logins']))
 		{
-			$this->dba_increment_user_logins($user);
+			$this->increment_user_logins($user);
 		}
 
-		$this->dba_save_user($user);
+		$this->save_user($user);
 
 		// Regenerate session (prevents session fixation attacks)
 		$this->_sess->regenerate();
@@ -161,11 +161,11 @@ abstract class A1_Core {
 
 		$user = is_object($username)
 			? $username
-			: $this->dba_load_user_by_username($username);
+			: $this->load_user_by_username($username);
 
 		if ($user)
 		{
-			if($this->dba_validate_user_password($user, $password)) {
+			if($this->validate_user_password($user, $password)) {
 				$this->complete_login($user,$remember);
 				return $user;
 			}
