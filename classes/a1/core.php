@@ -98,7 +98,7 @@ abstract class A1_Core {
 
 				if (count($token) === 2 AND is_string($token[0]) AND is_numeric($token[1]))
 				{
-					$user = $this->load_user_by_token($token[1], $token[0]);
+					$user = $this->load_token($token[1], $token[0]);
 
 					// Found user, complete login and return
 					if($user) {
@@ -161,11 +161,11 @@ abstract class A1_Core {
 
 		$user = is_object($username)
 			? $username
-			: $this->load_user_by_username($username);
+			: $this->load_user($username, $password);
 
 		if ($user)
 		{
-			if($this->validate_user_password($user, $password)) {
+			if($this->validate_user($user, $password)) {
 				$this->complete_login($user,$remember);
 				return $user;
 			}

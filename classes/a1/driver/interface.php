@@ -8,11 +8,11 @@
 interface A1_Driver_Interface {
 
 	/* methods for classes that extend A1 as database drivers */
-	public function load_user_by_token($user_id, $token);
-	public function load_user_by_username($username);
+	public function load_token($user_id, $token);
+	public function load_user ($username, $password);
 	public function set_user_token($user, $token);
 	public function set_user_last_login($user, $time);
 	public function increment_user_logins($user);
 	public function save_user($user);
-	public function validate_user_password($user, $password);
+	public function validate_user($user, $password);
 }

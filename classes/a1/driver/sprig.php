@@ -15,7 +15,7 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param string $token
 	 * @return object / NULL
 	 */
-	public function load_user_by_token($user_id, $token)
+	public function load_token($user_id, $token)
 	{
 		$user = Sprig::factory($this->_config['user_model'], array(
 					$this->_config['columns']['token'] => $token,
@@ -36,12 +36,14 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * Loading user by name
 	 *
 	 * @param string $username
+	 * @param string $password
 	 * @return object / NULL
 	 */
-	public function load_user_by_username($username)
+	public function load_user($username, $password)
 	{
 		$user = Sprig::factory($this->_config['user_model'], array(
-					$this->_config['columns']['username'] => $username));
+					$this->_config['columns']['username'] => $username,
+					$this->_config['columns']['password'] => $password));
 		$user->load();
 
 		if($user->loaded())
@@ -105,9 +107,16 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 * @param string $password
 	 * @return boolean
 	 */
-	public function validate_user_password($user, $password)
+	public function validate_user($user, $password)
 	{
-		return ($user->{$this->_config['columns']['password']} == $password);
+		if($user->loaded())
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 } // End A1_Driver_Sprig

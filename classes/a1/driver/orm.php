@@ -15,7 +15,7 @@ class A1_Driver_ORM extends A1 implements A1_Driver_Interface {
 	 * @param string $token
 	 * @return object / NULL
 	 */
-	public function load_user_by_token($user_id, $token)
+	public function load_token($user_id, $token)
 	{
 		$user = ORM::factory($this->_config['user_model'])
 			->where($this->_config['columns']['token'],'=',$token)
@@ -36,7 +36,7 @@ class A1_Driver_ORM extends A1 implements A1_Driver_Interface {
 	 * @param string $username
 	 * @return object / NULL
 	 */
-	public function load_user_by_username($username)
+	public function load_user($username, $password)
 	{
 		$user = ORM::factory($this->_config['user_model'])
 			->where($this->_config['columns']['username'],'=',$username)
@@ -102,7 +102,7 @@ class A1_Driver_ORM extends A1 implements A1_Driver_Interface {
 	 * @param string $password
 	 * @return boolean
 	 */
-	public function validate_user_password($user, $password)
+	public function validate_user($user, $password)
 	{
 		$password_in_db = $user->{$this->_config['columns']['password']};
 		$salt = $this->find_salt($password_in_db);
