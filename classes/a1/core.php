@@ -35,12 +35,12 @@ abstract class A1_Core {
 		$this->_name       = $_name;
 		$this->_config     = Kohana::config($_name);
 		$this->_sess       = Session::instance( $this->_config['session_type'] );
-		
+
 		// Clean up the salt pattern and split it into an array
 		$this->_config['salt_pattern'] = preg_split('/,\s*/', $this->_config['salt_pattern']);
 
 		// Generate session key
-		$this->_config['session_key'] = 'a1_' . $this->_name;
+		$this->_config['session_key'] = $this->_name;
 	}
 
 	/**
@@ -51,10 +51,10 @@ abstract class A1_Core {
 	public static function instance($_name = 'a1')
 	{
 		static $_instances;
-	
+
 		$config = Kohana::config($_name);
 		$class_name = 'A1_Driver_'.$config['driver'];
-		
+
 		if ( ! isset($_instances[$_name]))
 		{
 				$_instances[$_name] = new $class_name($_name);
@@ -62,7 +62,7 @@ abstract class A1_Core {
 
 		return $_instances[$_name];
 	}
-	
+
 	/**
 	 * Returns TRUE is a user is currently logged in
 	 *
@@ -92,7 +92,7 @@ abstract class A1_Core {
 		// Look for user in cookie
 		if( $this->_config['lifetime'])
 		{
-			if ( ($token = cookie::get('a1_'.$this->_name.'_autologin')) )
+			if ( ($token = cookie::get($this->_name.'_autologin')) )
 			{
 				$token = explode('.',$token);
 
@@ -119,18 +119,17 @@ abstract class A1_Core {
 		{
 			// Create token
 			$token = text::random('alnum', 32);
-			
+
 			$this->set_user_token($user, $token);
-			
-			//cookie::set('a1_'.$this->_name.'_autologin', $token . '.' . $user->primary_key_value, $this->_config['lifetime']);
-			cookie::set('a1_'.$this->_name.'_autologin', $token . '.' . $user->id, $this->_config['lifetime']);
+
+			cookie::set($this->_name.'_autologin', $token . '.' . $user->id, $this->_config['lifetime']);
 		}
 
 		if(isset($this->_config['columns']['last_login']))
 		{
 			$this->set_user_last_login($user, time());
 		}
-		
+
 		if(isset($this->_config['columns']['logins']))
 		{
 			$this->increment_user_logins($user);
@@ -140,7 +139,7 @@ abstract class A1_Core {
 
 		// Regenerate session (prevents session fixation attacks)
 		$this->_sess->regenerate();
-		
+
 		$this->_sess->set($this->_config['session_key'], $user);
 	}
 
@@ -182,11 +181,11 @@ abstract class A1_Core {
 	 */
 	public function logout($destroy = FALSE)
 	{
-		if (cookie::get('a1_'.$this->_name.'_autologin'))
+		if (cookie::get($this->_name.'_autologin'))
 		{
-			cookie::delete('a1_'.$this->_name.'_autologin');
+			cookie::delete($this->_name.'_autologin');
 		}
-		
+
 		if ($destroy === TRUE)
 		{
 			// Destroy the session completely
