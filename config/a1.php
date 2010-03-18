@@ -39,11 +39,12 @@ return array(
 	 * Table column names
 	 */
 	'columns' => array(
-		'username'  => 'username',   //username
-		'password'  => 'password',   //password
-		'token'     => 'token',      //token
-		'last_login'=> 'last_login', //last login (optional)
-		'logins'    => 'logins'      //login count (optional)
+		'pk'        =>  'id',        // table primary key name
+		'username'  => 'username',   // username or field to login user by
+		'password'  => 'password',   // password field
+		'token'     => 'token',      // token field name
+		'last_login'=> 'last_login', // last login (optional)
+		'logins'    => 'logins'      // login count (optional)
 	),
 
 	/**

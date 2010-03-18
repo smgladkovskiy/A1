@@ -15,11 +15,11 @@ class A1_Driver_Mango extends A1 implements A1_Driver_Interface {
 	 * @param string $token
 	 * @return object / NULL
 	 */
-	public function load_user_by_token($user_id, $token)
+	public function load_token($user_id, $token)
 	{
 		$user = Mango::factory($this->_config['user_model'], array(
-			'_id'   => $user_id,
-			'token' => $token
+			$this->_config['columns']['pk']    => $user_id,
+			$this->_config['columns']['token'] => $token
 		))->load();
 
 		// @TODO: do the right thing here
@@ -32,7 +32,7 @@ class A1_Driver_Mango extends A1 implements A1_Driver_Interface {
 	 * @param string $username
 	 * @return object / NULL
 	 */
-	public function load_user_by_username($username)
+	public function load_user($username)
 	{
 		$user = Mango::factory($this->_config['user_model'],array(
 				$this->_config['columns']['username'] => $username,
@@ -97,7 +97,7 @@ class A1_Driver_Mango extends A1 implements A1_Driver_Interface {
 	 * @param string $password
 	 * @return boolean
 	 */
-	public function validate_user_password($user, $password)
+	public function validate_user($user, $password)
 	{
 		// @TODO: copied from sprig, fix
 		//return ($user->{$this->_config['columns']['password']} == $password);

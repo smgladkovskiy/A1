@@ -24,4 +24,4 @@ abstract class Model_A1_Sprig_User extends Sprig {
 
 		parent::__construct($id);
 	}
-}
+} // End Model_A1_Sprig_User
