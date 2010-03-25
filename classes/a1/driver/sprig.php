@@ -17,9 +17,9 @@ class A1_Driver_Sprig extends A1 implements A1_Driver_Interface {
 	 */
 	public function load_token($user_id, $token)
 	{
-		$user = Sprig::factory($this->_config['user_model'])
-			->where($this->_config['columns']['token'], '=', $token)
-			->where($this->_config['columns']['pk'],    '=', $user_id);
+		$user = Sprig::factory($this->_config['user_model'], array(
+				$this->_config['columns']['token'] => $token,
+				$this->_config['columns']['pk']    => $user_id));
 		$user->load();
 
 		if($user->loaded())
