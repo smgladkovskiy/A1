@@ -51,6 +51,16 @@ class A1_Driver_Jelly extends A1 implements A1_Driver_Interface {
 		}
 		else
 		{
+			// Creating default user
+			// @todo: move this shit to install method
+			if(Jelly::select('user')->count() === 0)
+			{
+				Jelly::factory('user', array(
+					'email' => $this->_config['admin']['email'],
+					'password' => $this->_config['admin']['password'],
+					'password_confirm' => $this->_config['admin']['password'],
+				))->save();
+			}
 			return NULL;
 		}
 	}
