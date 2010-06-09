@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') OR die('No direct access allowed.');
+<?php defined('SYSPATH') or die('No direct access allowed.');
 
 /**
  * A1 Jelly Driver
  *
- * @author avis <SMGladkovskiy@gmail.com>
+ * @author avis <smgladkovskiy@gmail.com>
  * @package A1 drivers
  */
 class A1_Driver_Jelly extends A1 implements A1_Driver_Interface {
@@ -20,7 +20,7 @@ class A1_Driver_Jelly extends A1 implements A1_Driver_Interface {
 		$user = Jelly::select($this->_config['user_model'])
 			->where($this->_config['columns']['token'], '=', $token)
 			->where($this->_config['columns']['pk'],    '=', $user_id)
-			->load();
+			->limit(1)->execute();
 
 		if($user->loaded())
 		{
@@ -43,7 +43,7 @@ class A1_Driver_Jelly extends A1 implements A1_Driver_Interface {
 	{
 		$user = Jelly::select($this->_config['user_model'])
 			->where($this->_config['columns']['username'], '=', $username)
-			->load();
+			->limit(1)->execute();
 
 		if($user->loaded())
 		{
@@ -56,8 +56,8 @@ class A1_Driver_Jelly extends A1 implements A1_Driver_Interface {
 			if(Jelly::select('user')->count() === 0)
 			{
 				Jelly::factory('user', array(
-					'email' => $this->_config['admin']['email'],
-					'password' => $this->_config['admin']['password'],
+					'email'            => $this->_config['admin']['email'],
+					'password'         => $this->_config['admin']['password'],
 					'password_confirm' => $this->_config['admin']['password'],
 				))->save();
 			}
